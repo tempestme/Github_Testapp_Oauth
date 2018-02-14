@@ -4,6 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.pavel.githubtestapp.view.LoginActivity">
+    tools:context="com.example.pavel.githubtestapp.view.LoginActivity"
+    android:background="@drawable/night_background">
+
+    <com.dd.processbutton.iml.ActionProcessButton
+        android:id="@+id/auth_button"
+        android:text="Sign in"
+        android:layout_width="218dp"
+        android:layout_height="51dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.898" />
 
 </android.support.constraint.ConstraintLayout>
