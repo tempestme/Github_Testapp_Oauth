@@ -3,6 +3,7 @@ package com.example.pavel.githubtestapp.controller;
 import com.example.pavel.githubtestapp.model.AccessToken;
 import com.example.pavel.githubtestapp.model.Commit;
 import com.example.pavel.githubtestapp.model.Repository;
+import com.example.pavel.githubtestapp.model.User;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -31,6 +32,9 @@ public interface GitHubClient {
 
     @GET("/user/repos")
     Call<ArrayList<Repository>> getRepos(@QueryMap Map<String, String> map);
+
+    @GET("/user")
+    Call<User> getUser(@QueryMap Map<String, String> map);
 
     @GET("repos/{name}/{repo}/commits")
     Call<ArrayList<Commit>> getCommits(
