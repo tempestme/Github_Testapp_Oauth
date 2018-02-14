@@ -10,8 +10,8 @@ import android.widget.Toast;
 import com.example.pavel.githubtestapp.R;
 import com.example.pavel.githubtestapp.controller.GitHubClient;
 import com.example.pavel.githubtestapp.model.AccessToken;
+import com.example.pavel.githubtestapp.model.Commit;
 import com.example.pavel.githubtestapp.model.Repository;
-import com.example.pavel.githubtestapp.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,27 +99,25 @@ public class LoginActivity extends AppCompatActivity {
                                  ) {Log.e("repo",repo.getRepo());
                             }
 
-
                             Retrofit.Builder builder1 = new Retrofit.Builder()
                                     .baseUrl(GitHubClient.BASE_URL)
                                     .addConverterFactory(GsonConverterFactory.create());
                             Retrofit retrofit1 = builder1.build();
+
                             GitHubClient client1 = retrofit1.create(GitHubClient.class);
+                            Call<ArrayList<Commit>> commitCall = client1.getCommits("tempestme","android_dictophone", map);
 
-                            Call<User> user = client1.getUser(repositories.get(1).getRepo(),map);
-
-                            user.enqueue(new Callback<User>() {
+                            commitCall.enqueue(new Callback<ArrayList<Commit>>() {
                                 @Override
-                                public void onResponse(Call<User> call, Response<User> response) {
+                                public void onResponse(Call<ArrayList<Commit>> call, Response<ArrayList<Commit>> response) {
 
                                 }
 
                                 @Override
-                                public void onFailure(Call<User> call, Throwable t) {
+                                public void onFailure(Call<ArrayList<Commit>> call, Throwable t) {
 
                                 }
                             });
-
 
                         }
 
@@ -130,15 +128,11 @@ public class LoginActivity extends AppCompatActivity {
                     });
 
 
-
-
-
-
                 }
 
                 @Override
                 public void onFailure(Call<AccessToken> call, Throwable t) {
-                    Toast.makeText(LoginActivity.this, "no", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "check your internet connection", Toast.LENGTH_SHORT).show();
                 }
             });
             //Toast.makeText(getApplicationContext(),"yey",Toast.LENGTH_SHORT).show();

@@ -1,8 +1,8 @@
 package com.example.pavel.githubtestapp.controller;
 
 import com.example.pavel.githubtestapp.model.AccessToken;
+import com.example.pavel.githubtestapp.model.Commit;
 import com.example.pavel.githubtestapp.model.Repository;
-import com.example.pavel.githubtestapp.model.User;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -29,30 +29,14 @@ public interface GitHubClient {
         @Field("code")String code
     );
 
-
-//    @Headers({"Accept:application/vnd.github.jean-grey-preview+json",
-//            "username: {token}"})
-//    @GET
-//    Call<User> getUser(
-//            @Path("token") String token
-//    );
-
     @GET("/user/repos")
     Call<ArrayList<Repository>> getRepos(@QueryMap Map<String, String> map);
 
-
-
-    @GET("/user/repos/bash")
-    Call<User> getUser(
+    @GET("repos/{name}/{repo}/commits")
+    Call<ArrayList<Commit>> getCommits(
+            @Path("name")String name,
             @Path("repo")String repo,
             @QueryMap Map<String, String> map
-
     );
-
-    @GET("/user")
-    Call<User> getUsername(@QueryMap Map<String, String> map);
-
-
-
 
 }
