@@ -8,4 +8,20 @@
         <item name="colorAccent">#a7afb2</item>
     </style>
 
+    <style name="MainTextCard">
+        <item name="android:textColor">#131516</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="SecondaryTextCard">
+        <item name="android:textColor">#131516</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+    <style name="DescriptionTextCard">
+        <item name="android:textColor">#373d3f</item>
+        <item name="android:textSize">10dp</item>
+    </style>
+
+
 </resources>

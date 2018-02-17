@@ -2,19 +2,24 @@ package com.example.pavel.githubtestapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 
 public class Repository {
     @SerializedName("name")
     private String repo;
-    private Owner owner;
+    @SerializedName("owner")
+    public Owner owner;
     private String full_name;
     private String description;
     @SerializedName("private")
     private String isprivate;
     private String fork;
     private String commits_url;
+    @SerializedName("commits")
+    public ArrayList<Commit> commits;
+
 
     public Repository(String repo, Owner owner, String full_name, String description, String isprivate, String fork, String commits_url) {
         this.repo = repo;
@@ -23,10 +28,15 @@ public class Repository {
         this.description = description;
         this.isprivate = isprivate;
         this.fork = fork;
+        commits = new ArrayList<Commit>();
 
         String clearUrl = commits_url.replaceAll(Pattern.quote("{/sha}"),"");
         clearUrl = clearUrl.replaceAll(Pattern.quote("https://api.github.com/"),"");
         this.commits_url = clearUrl;
+    }
+
+    public String getOwnerName() {
+        return owner.getLogin();
     }
 
     public String getRepo() {
@@ -38,7 +48,7 @@ public class Repository {
     }
 
     public Owner getOwner() {
-        return owner;
+        return this.owner;
     }
 
     public String getFull_name() {
@@ -53,8 +63,10 @@ public class Repository {
         return isprivate;
     }
 
-    public String getFork() {
-        return fork;
+    public String getFork() {return fork;}
+
+    public ArrayList<Commit> getCommits() {
+        return commits;
     }
 
     public String getCommits_url() {
@@ -64,13 +76,20 @@ public class Repository {
         clearUrl = clearUrl.trim();
         return clearUrl;
     }
+
     public void setCommits_url(String commits_url) {
     }
 
-    private class Owner{
+    public static class Owner{
         private String login;
         private String id;
         private String avatar_url;
+
+        public Owner(String login, String id, String avatar_url) {
+            this.login = login;
+            this.id = id;
+            this.avatar_url = avatar_url;
+        }
 
         public String getLogin() {
             return login;

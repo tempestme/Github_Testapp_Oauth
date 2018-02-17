@@ -1,14 +1,23 @@
 package com.example.pavel.githubtestapp.view;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.example.pavel.githubtestapp.R;
-import com.example.pavel.githubtestapp.model.Api;
+import com.example.pavel.githubtestapp.controller.GitHubClient;
+import com.example.pavel.githubtestapp.model.AccessToken;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         button = (ActionProcessButton) findViewById(R.id.auth_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,9 +59,41 @@ public class LoginActivity extends AppCompatActivity {
 
 
         uri = getIntent().getData();
+        if (uri != null && uri.toString().startsWith(redirectUri)) {
+            String code = uri.getQueryParameter("code");
 
-        Api api = new Api(getApplicationContext(),uri);
-        api.getInfo();
+            GitHubClient client_token_call;
+
+            Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl("https://github.com/")
+                    .addConverterFactory(GsonConverterFactory.create());
+            Retrofit retrofit = builder.build();
+            client_token_call = retrofit.create(GitHubClient.class);
+
+            Call<AccessToken> accessTokenCall = client_token_call.getAccessToken(clientId, clientSecret,code);
+
+            accessTokenCall.enqueue(new Callback<AccessToken>() {
+                @Override
+                public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
+                    AccessToken token = response.body();
+                    Intent repoIntent = new Intent(getApplicationContext(),RepoActivity.class);
+                    repoIntent.putExtra("token",token.getAccessToken());
+                    setIntent(new Intent(getApplicationContext(),LoginActivity.class));
+                    finish();
+                    startActivity(repoIntent);
+                }
+
+                @Override
+                public void onFailure(Call<AccessToken> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(),"check your connection", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+
+//        Api api = new Api(getApplicationContext(),uri);
+//        api.getInfo();
+
 
 
 

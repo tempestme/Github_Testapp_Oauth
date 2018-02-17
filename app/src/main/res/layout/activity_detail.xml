@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.pavel.githubtestapp.view.DetailActivity"
+    android:layout_margin="5dp">
+
+    <TextView
+        style="@style/MainTextCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Detail activity"
+        tools:layout_editor_absoluteX="130dp"
+        tools:layout_editor_absoluteY="159dp"
+        android:id="@+id/mainTv" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/SecondaryTextCard"
+        tools:text="secondaryText"
+        android:layout_below="@+id/mainTv"
+        android:layout_alignParentStart="true"
+        android:id="@+id/secondTv" />
+    <TextView
+        android:id="@+id/descriptionTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="description"
+        android:layout_below="@+id/secondTv"
+        android:layout_alignParentStart="true"
+        style="@style/DescriptionTextCard"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/commitList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/descriptionTv"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+</RelativeLayout>

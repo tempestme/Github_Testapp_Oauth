@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.pavel.githubtestapp.view.LoginActivity"
-    android:background="@drawable/night_background">
+    android:background="@drawable/night_background"
+    android:orientation="vertical">
 
     <com.dd.processbutton.iml.ActionProcessButton
         android:id="@+id/auth_button"
