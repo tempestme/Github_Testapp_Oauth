@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.dd.processbutton.iml.ActionProcessButton;
@@ -27,22 +28,16 @@ public class LoginActivity extends AppCompatActivity {
     private Uri uri;
     private static boolean key = true;
     ActionProcessButton button;
+    Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         button = (ActionProcessButton) findViewById(R.id.auth_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                key = false;
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
-                        "https://github.com/login/oauth/authorize" + "?client_id=" + clientId + "&scope=repo&redirect_uri=" + redirectUri)));
-            }
-        });
+
+
 //        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(
 //                "https://github.com/login/oauth/authorize" + "?client_id=" + clientId + "&scope=repo&redirect_uri=" + redirectUri));
 //
@@ -60,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
         uri = getIntent().getData();
         if (uri != null && uri.toString().startsWith(redirectUri)) {
+            button.setOnClickListener(null);
             String code = uri.getQueryParameter("code");
 
             GitHubClient client_token_call;
@@ -86,6 +82,17 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<AccessToken> call, Throwable t) {
                     Toast.makeText(getApplicationContext(),"check your connection", Toast.LENGTH_LONG).show();
+                }
+            });
+        }else{
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    button.setActivated(false);
+                    key = false;
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
+                            "https://github.com/login/oauth/authorize" + "?client_id=" + clientId + "&scope=repo&redirect_uri=" + redirectUri)));
+
                 }
             });
         }

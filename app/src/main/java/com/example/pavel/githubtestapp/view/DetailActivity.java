@@ -22,7 +22,6 @@ public class DetailActivity extends AppCompatActivity {
     TextView repoDescription;
     RecyclerView commitList;
     DetailListAdapter adapter;
-    LinearLayoutManager linearLayoutManager;
     RecyclerView.LayoutManager layoutManager;
 
     @Override
